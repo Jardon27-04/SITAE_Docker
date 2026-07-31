@@ -1,0 +1,10 @@
+.env
+
+/vendor
+
+/mysql/*.sql
+
+*.log
+
+.DS_Store
+Thumbs.dbs

@@ -1,0 +1,32 @@
+body {
+}
+
+.cont-body {
+  margin: 3rem auto;
+  width: 100%;
+  background-color: #e7da2fe2;
+
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  text-align: center;
+}
+.cabezera {
+  background-color: rgb(110, 145, 243);
+}
+
+.cont_tabla {
+  width: 70vh;
+  height: 50vh;
+  justify-content: center;
+}
+.btn {
+  background-color: rgb(10, 144, 15);
+  color: #ffffff;
+  border: none;
+  width: 8vh;
+  height: 4vh;
+}

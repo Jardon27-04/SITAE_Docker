@@ -1,0 +1,160 @@
+<?php 
+
+set_time_limit(0);
+$mysqliold = new mysqli(
+    "localhost",     
+    "tecnol64_tecnol64",                 
+    "dIz9Dy6Ni!J11(",           
+    "tecnol64_talleres2026"         
+);
+$mysqliold->set_charset("utf8");
+
+if ($mysqliold->connect_errno) {
+    die("Error al conectar con la BD vieja: " . $mysqliold->connect_error);
+}
+require('conexion.php');
+
+$ok = 0;
+$error = 0;
+
+echo "<h2>DOCENTES</h2>";
+
+$get_docente = $mysqliold->query("SELECT * FROM docentes");
+
+while ($d = $get_docente->fetch_assoc()) {
+
+    $existe = $mysqli->query("SELECT id_docente FROM docentes WHERE id_docente = '{$d['id_docente']}'");
+
+    if ($existe->num_rows > 0) {
+        echo " Repetido ID: {$d['id_docente']}<br><hr>";
+        continue;
+    }
+
+    $insert = $mysqli->query("INSERT INTO docentes 
+    (id_docente,num_empleado,nombre, rol, telefono, correo, password, status, codigo) 
+    VALUES 
+    ('{$d['id_docente']}','{$d['num_empleado']}','{$d['nombre']}', '{$d['rol']}', '{$d['telefono']}', '{$d['correo']}', '{$d['password']}', '{$d['status']}', '{$d['codigo']}')");
+
+    if ($insert) { echo " OK<br>"; $ok++; } 
+    else { echo " ".$mysqli->error."<br>"; $error++; }
+
+    echo "<hr>";
+}
+
+echo "<h2>ALUMNOS</h2>";
+
+$get_alumno = $mysqliold->query("SELECT * FROM alumno");
+
+while ($a = $get_alumno->fetch_assoc()) {
+
+    $existe = $mysqli->query("SELECT id_alumno FROM alumno WHERE id_alumno = '{$a['id_alumno']}'");
+
+    if ($existe->num_rows > 0) {
+        echo " Repetido ID: {$a['id_alumno']}<br><hr>";
+        continue;
+    }
+
+    $insert = $mysqli->query("INSERT INTO alumno 
+    (id_alumno,nombre_alumno, curp, matricula, cuatrimestre, grupo, carrera, telefono, correo, password, nivel, codigo,status) 
+    VALUES 
+    ('{$a['id_alumno']}','{$a['nombre_alumno']}', '{$a['curp']}', '{$a['matricula']}', '{$a['cuatrimestre']}', '{$a['grupo']}', '{$a['carrera']}','{$a['telefono']}', '{$a['correo']}', '{$a['password']}', '{$a['nivel']}','{$a['codigo']}','{$a['status']}')");
+
+    if ($insert) { echo " OK<br>"; $ok++; } 
+    else { echo " ".$mysqli->error."<br>"; $error++; }
+
+    echo "<hr>";
+}
+
+echo "<h2>AÑOS</h2>";
+
+$get_anios = $mysqliold->query("SELECT * FROM anios");
+
+while ($an = $get_anios->fetch_assoc()) {
+
+    $existe = $mysqli->query("SELECT id_anio FROM anios WHERE id_anio = '{$an['id_anio']}'");
+
+    if ($existe->num_rows > 0) {
+        echo " Repetido ID: {$an['id_anio']}<br><hr>";
+        continue;
+    }
+
+    $insert = $mysqli->query("INSERT INTO anios (id_anio,anio,status) 
+    VALUES ('{$an['id_anio']}','{$an['anio']}','{$an['status']}')");
+
+    if ($insert) { echo " OK<br>"; $ok++; } 
+    else { echo " ".$mysqli->error."<br>"; $error++; }
+
+    echo "<hr>";
+}
+
+echo "<h2>TALLERES</h2>";
+
+$get_talleres = $mysqliold->query("SELECT * FROM talleres");
+
+while ($t = $get_talleres->fetch_assoc()) {
+
+    $existeT = $mysqli->query("SELECT id_taller FROM talleres WHERE id_taller = '{$t['id_taller']}'");
+
+    if ($existeT->num_rows > 0) {
+        echo " Repetido ID: {$t['id_taller']}<br><hr>";
+        continue;
+    }
+
+    $existeD = $mysqli->query("SELECT id_docente FROM docentes WHERE id_docente = '{$t['docente_id']}'");
+
+    if ($existeD->num_rows == 0) {
+        echo " Docente no existe: {$t['docente_id']}<br><hr>";
+        $error++;
+        continue;
+    }
+
+    $fecha = date("y-m-d");
+
+    $insert = $mysqli->query("INSERT INTO talleres
+    (id_taller, nombre_taller, docente_id, hora, dia, periodo, grupo, cantidad_inscritos, anio, status, fecha_limite, comentarios, limite_liberacion)
+    VALUES
+    ('{$t['id_taller']}','{$t['nombre_taller']}', '{$t['docente_id']}', '{$t['hora']}',
+     '{$t['dia']}', '{$t['periodo']}', '{$t['grupo']}',
+     '{$t['cantidad_inscritos']}', '{$t['anio']}',
+     '{$t['status']}', '{$t['fecha_limite']}', '{$t['comentarios']}', '$fecha')");
+
+    if ($insert) { echo " OK<br>"; $ok++; } 
+    else { echo " ".$mysqli->error."<br>"; $error++; }
+
+    echo "<hr>";
+}
+
+echo "<h2>INSCRIPCIONES</h2>";
+
+$get_inscripciones = $mysqliold->query("SELECT * FROM inscripciones");
+
+while ($i = $get_inscripciones->fetch_assoc()) {
+
+    $existe = $mysqli->query("SELECT id_inscripcion FROM inscripciones WHERE id_inscripcion = '{$i['id_inscripcion']}'");
+
+    if ($existe->num_rows > 0) {
+        echo "⚠Repetido ID: {$i['id_inscripcion']}<br><hr>";
+        continue;
+    }
+
+    $insert = $mysqli->query("INSERT INTO inscripciones
+    (id_inscripcion, id_alumno, id_docente, id_taller, anio, status_liberado, status, nivel) 
+    VALUES
+    ('{$i['id_inscripcion']}','{$i['id_alumno']}', '{$i['id_docente']}', '{$i['id_taller']}', '{$i['anio']}', '{$i['status_liberado']}', '{$i['status']}', '{$i['nivel']}')");
+
+    if ($insert) { echo " OK<br>"; $ok++; } 
+    else { echo " ".$mysqli->error."<br>"; $error++; }
+
+    echo "<hr>";
+}
+
+echo "<h2> RESULTADOS</h2>";
+echo " Correctos: $ok <br>";
+echo " Errores: $error <br>";
+
+echo '<script>setTimeout(function(){ location.href="panel_admin.php"; }, 1800);</script>';
+
+?> 
+
+
+

@@ -1,0 +1,13 @@
+.git
+.gitignore
+
+.env
+
+mysql/*.sql
+
+node_modules
+
+*.log
+
+.DS_Store
+Thumbs.db
