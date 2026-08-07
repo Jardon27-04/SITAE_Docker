@@ -237,6 +237,9 @@ body{
          <li>
             <a href="add_superroot.php"><i class="fas fa-user-shield"></i>Agregar Super Administrador</a>
         </li>
+         <li>
+            <a href="exportar_bd.php"><i class="fas fa-user-shield"></i>Corregir Datos</a>
+        </li>
 
                 
           <?php } ?>
