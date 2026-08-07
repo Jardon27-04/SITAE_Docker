@@ -13,8 +13,7 @@ require("conexion.php");
 
     $upd_datos = $mysqli->query("UPDATE talleres SET limite_liberacion = '$fecha_limite' WHERE status = '1'");
     
-    $upd_datos2 = $mysqli->query("UPDATE talleres SET limite_liberacion = '$fecha_limite' WHERE status = '1' AND limite_liberacion = ''");
-    
+  $upd_datos2 = $mysqli->query("UPDATE talleres SET limite_liberacion = '$fecha_limite' WHERE status = '1' AND (limite_liberacion IS NULL OR limite_liberacion = '0000-00-00')");  
     if ($update_datos) {
         echo "Actualizacion exitosa.";
         echo '<script>setTimeout(function(){ location.href="panel_admin.php"; }, 1000);</script>';
