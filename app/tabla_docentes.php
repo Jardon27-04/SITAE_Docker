@@ -5,23 +5,22 @@
 
 session_start();
 
-
 require('conexion.php');
 
 $rol = $_SESSION['rol'];
 
 $status = $_POST['status'] ?? '';
- 
+
 if($rol == 1){
-$query = "SELECT 
-           id_docente, nombre, telefono, correo, status, num_empleado FROM docentes
-        WHERE rol = 2 AND 1";
+$query = "SELECT
+id_docente, nombre, telefono, correo, status, num_empleado FROM docentes
+WHERE rol = 2 AND 1";
 
 }
 
 if($rol == 3){
-$query = "SELECT 
-           id_docente, nombre, telefono, correo, status, num_empleado FROM docentes";
+$query = "SELECT
+id_docente, nombre, telefono, correo, status, num_empleado FROM docentes";
 
 }
 if ($status !== '') {
