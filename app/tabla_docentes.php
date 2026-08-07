@@ -1,4 +1,3 @@
-```php
 <style> body{
     background: rgb(219, 218, 207);
 }
@@ -74,4 +73,3 @@ $claseBtn = "btn-danger";
 
 echo "";
 ?>
-```
