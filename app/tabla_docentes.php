@@ -1,7 +1,8 @@
+```php
 <style> body{
     background: rgb(219, 218, 207);
 }
-    </style><?php
+</style><?php
 session_start();
 
 require('conexion.php');
@@ -57,7 +58,7 @@ echo "
 <input type="hidden" name="status" value="2">
 <?php
 
-} elseif ($row['status'] == 2) {
+if ($row['status'] == 2) {
 
 $textoBtn = "Inactivo";
 $claseBtn = "btn-danger";
@@ -73,3 +74,4 @@ $claseBtn = "btn-danger";
 
 echo "";
 ?>
+```
