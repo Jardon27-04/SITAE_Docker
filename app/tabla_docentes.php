@@ -111,7 +111,7 @@ while ($row = $resultado->fetch_assoc()) {
     <td>{$row['nombre']}</td>
 
     <td>{$row['telefono']}</td>
-
+ 
     <td>{$row['correo']}</td>
 
     <td>{$row['num_empleado']}</td>
