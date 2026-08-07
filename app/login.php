@@ -8,7 +8,11 @@
 
 <link rel="icon" type="image/png" href="img/Logo_UTSEM.JPG">
 
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -21,26 +25,17 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
- 
-    background: rgb(219, 218, 207);
-    background-size: 300% 300%;
-    animation: fondoMove 8s ease infinite;
+    background:rgb(219, 218, 207);
 }
- 
-@keyframes fondoMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
- 
+
 .contenedor{
     width:380px;
-    background: rgba(255,255,255,0.96);
+    background:rgba(255,255,255,0.96);
     padding:40px 35px;
     border-radius:22px;
     box-shadow:0 20px 50px rgba(0,0,0,.25);
     text-align:center;
-    backdrop-filter: blur(8px);
+    backdrop-filter:blur(8px);
     transition:.3s;
 }
 
@@ -71,7 +66,7 @@ img{
     margin-bottom:20px;
     font-size:22px;
 }
- 
+
 input[type="text"],
 input[type="password"]{
     width:100%;
@@ -89,7 +84,35 @@ input:focus{
     background:white;
     box-shadow:0 0 0 2px #6d8f3a;
 }
- 
+
+/* Contenedor de contraseña */
+.password-container{
+    position:relative;
+}
+
+/* Espacio para el ojo */
+.password-container input{
+    padding-right:40px;
+}
+
+#togglePassword{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#666;
+}
+
+/* Mensaje de contraseña */
+#msgPassword{
+    font-size:12px;
+    color:red;
+    text-align:left;
+    margin-top:-10px;
+    margin-bottom:10px;
+}
+
 input[type="submit"]{
     width:100%;
     padding:13px;
@@ -107,7 +130,7 @@ input[type="submit"]:hover{
     transform:translateY(-2px);
     box-shadow:0 10px 20px rgba(0,0,0,.18);
 }
- 
+
 .extra{
     margin-top:18px;
     font-size:14px;
@@ -124,19 +147,21 @@ input[type="submit"]:hover{
     text-decoration:underline;
 }
 
-                               
- .footer-note{
+.footer-note{
     font-size:12px;
     color:#777;
     margin-bottom:20px;
 }
-                               
+
 @media(max-width:430px){
+
     .contenedor{
         width:92%;
         padding:30px 25px;
     }
+
 }
+
 </style>
 </head>
 
@@ -146,71 +171,102 @@ input[type="submit"]:hover{
 
     <span class="titulo1">SITAE</span>
 
-<img src="img/i.jpg" alt="Logo">
-
-<form method="POST" action="login_verify.php">
-
-    <h2 class="titulo">Inicia Sesión</h2>
-
-    <input type="text" name="correo" placeholder="Correo">
-
-    <!-- Contraseña -->
-    <div style="position:relative;">
-        <input type="password"
-               name="password"
-               id="password"
-               placeholder="Contraseña">
-
-        <i class="fa-solid fa-eye"
-           id="togglePassword"
-           style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#666;">
-        </i>
+    <div class="footer-note">
+        Sistema Integral de Talleres Extracurriculares
     </div>
 
-    <input type="submit" value="Iniciar Sesión">
+    <img src="img/i.jpg" alt="Logo">
 
-</form>
+    <form method="POST" action="login_verify.php">
 
-<div class="extra">
-    ¿No estás registrado? <a href="add_alumno.php">Registrarme</a>
+        <h2 class="titulo">Inicia Sesión</h2>
+
+        <input 
+            type="text" 
+            name="correo" 
+            placeholder="Correo"
+            required
+        >
+
+        
+
+        <div class="password-container">
+
+            <input 
+                type="password" 
+                name="password"
+                id="password"
+                minlength="8"
+                maxlength="10"
+                placeholder="Contraseña"
+                required
+            >
+
+            <i 
+                class="fa-solid fa-eye" 
+                id="togglePassword">
+            </i>
+
+        </div>
+
+        <div id="msgPassword"></div>
+
+        <input type="submit" value="Iniciar Sesión">
+
+    </form>
+
+    <div class="extra">
+        ¿No estás registrado? 
+        <a href="add_alumno.php">Registrarme</a>
+    </div>
+
+    <div class="extra">
+        ¿Eres docente nuevo u olvidaste tu contraseña?
+        <a href="update_pass.php">Restablecer contraseña</a>
+    </div>
+
 </div>
 
-<div class="extra">
-    ¿Eres docente nuevo u olvidaste tu contraseña?
-    <a href="update_pass.php">Restablecer contraseña</a>
-</div>
 
+<script> 
 
-<script>
+const toggle = document.getElementById("togglePassword");
+const input = document.getElementById("password");
 
-const togglePassword = document.getElementById("togglePassword");
+toggle.addEventListener("click", function () {
+
+    const type = input.getAttribute("type") === "password"
+        ? "text"
+        : "password";
+
+    input.setAttribute("type", type);
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+
+});
+
+ 
 const password = document.getElementById("password");
-const form = password.closest("form");
+const msg = document.getElementById("msgPassword");
 
+password.addEventListener("input", function () {
 
-// Mostrar / ocultar contraseña
-togglePassword.addEventListener("click", function () {
+    if (password.value.length < 8) {
 
-    if (password.type === "password") {
-
-        password.type = "text";
-
-        this.classList.remove("fa-eye");
-        this.classList.add("fa-eye-slash");
+        msg.textContent = "La contraseña debe tener al menos 8 caracteres";
 
     } else {
 
-        password.type = "password";
-
-        this.classList.remove("fa-eye-slash");
-        this.classList.add("fa-eye");
+        msg.textContent = "";
 
     }
 
 });
 
+ 
+const form = document.querySelector("form");
 
-// Validar contraseña
 form.addEventListener("submit", function(event) {
 
     if (password.value.length < 8) {
@@ -220,8 +276,12 @@ form.addEventListener("submit", function(event) {
         alert("La contraseña debe tener al menos 8 caracteres");
 
         password.focus();
+
     }
 
 });
 
 </script>
+
+</body>
+</html>
