@@ -2,9 +2,12 @@
     background: rgb(219, 218, 207);
 }
     </style><?php
-require('conexion.php');
 
 session_start();
+
+
+require('conexion.php');
+
 $rol = $_SESSION['rol'];
 
 $status = $_POST['status'] ?? '';
