@@ -160,8 +160,8 @@ input[type="submit"]:hover{
        <label>Contraseña:</label>
 
 <div style="position:relative;">
-    <input type="password" id="password" minlength="8" maxlength="10" style="padding-right:40px;">
-    
+    <input type="password" name="password" id="password" placeholder="Contraseña">
+
     <i class="fa-solid fa-eye" id="togglePassword"
        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#666;">
     </i>
@@ -184,30 +184,36 @@ input[type="submit"]:hover{
     </div>
 
 </div>
-
 <script>
-const toggle = document.getElementById("togglePassword");
-const input = document.getElementById("password");
+const togglePassword = document.querySelector("#togglePassword");
+const password = document.querySelector("#password");
+const form = password.closest("form");
 
-toggle.addEventListener("click", function () {
-    const type = input.getAttribute("type") === "password" ? "text" : "password";
-    input.setAttribute("type", type);
+// Mostrar / ocultar contraseña
+togglePassword.addEventListener("click", function () {
 
-    this.classList.toggle("fa-eye");
+    const type = password.getAttribute("type") === "password"
+        ? "text"
+        : "password";
+
+    password.setAttribute("type", type);
+
     this.classList.toggle("fa-eye-slash");
 });
-    
-    
-    const password = document.getElementById("password");
-const msg = document.getElementById("msgPassword");
 
-password.addEventListener("input", function () {
+ 
+form.addEventListener("submit", function(event) {
+
     if (password.value.length < 8) {
-        msg.textContent = "La contraseña debe tener al menos 8 caracteres";
-    } else {
-        msg.textContent = "";
+        event.preventDefault();
+
+        alert("La contraseña debe tener al menos 8 caracteres");
+
+        password.focus();
     }
+
 });
+</script>
 </script>
 </body>
 </html>
