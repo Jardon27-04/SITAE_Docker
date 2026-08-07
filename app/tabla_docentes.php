@@ -1,12 +1,9 @@
-<style> body{
-    background: rgb(219, 218, 207);
-}
-</style><?php
+<?php
 session_start();
 
 require('conexion.php');
 
-$rol = $_SESSION['rol'];
+$rol = $_SESSION['rol'] ?? null;
 
 $status = $_POST['status'] ?? '';
 
@@ -32,7 +29,11 @@ $resultado = $mysqli->query($query);
 
 echo "
 
-
+<style>
+body{
+    background: rgb(219, 218, 207);
+}
+</style>
 
 Nombre
 Telefono
@@ -55,6 +56,7 @@ echo "
 ?>
 
 <input type="hidden" name="status" value="2">
+
 <?php
 
 if ($row['status'] == 2) {
@@ -63,10 +65,6 @@ $textoBtn = "Inactivo";
 $claseBtn = "btn-danger";
 ?>
 
-
-
-
-
 <input type="submit" value="Actualizar" class="btn btn-success btn-sm">
 
 <?php
@@ -74,4 +72,4 @@ $claseBtn = "btn-danger";
 echo "";
 }
 }
-?>
+?> 
