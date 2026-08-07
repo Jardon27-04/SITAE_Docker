@@ -98,7 +98,7 @@ input:focus{
 #togglePassword{
     position:absolute;
     right:10px;
-    top:50%;
+    top:20%;
     transform:translateY(-50%);
     cursor:pointer;
     color:#666;
