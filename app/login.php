@@ -145,66 +145,76 @@ input[type="submit"]:hover{
 <div class="contenedor">
 
     <span class="titulo1">SITAE</span>
-                               
 
-<div class="footer-note">Sistema Integral de Talleres Extracurriculares</div>
+<img src="img/i.jpg" alt="Logo">
 
+<form method="POST" action="login_verify.php">
 
-    <img src="img/i.jpg" alt="Logo">
+    <h2 class="titulo">Inicia Sesión</h2>
 
-    <form method="POST" action="login_verify.php">
+    <input type="text" name="correo" placeholder="Correo">
 
-        <h2 class="titulo">Inicia Sesión</h2>
+    <!-- Contraseña -->
+    <div style="position:relative;">
+        <input type="password"
+               name="password"
+               id="password"
+               placeholder="Contraseña">
 
-        <input type="text" name="correo" placeholder="Correo">
-       <label>Contraseña:</label>
-
-<div style="position:relative;">
-    <input type="password" name="password" id="password" placeholder="Contraseña">
-
-    <i class="fa-solid fa-eye" id="togglePassword"
-       style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#666;">
-    </i>
-</div>
-<div id="msgPassword" style="font-size:12px; color:red;"></div>
-
-<div class="footer-note">Máximo 10 caracteres</div>
-
-        <input type="submit" value="Iniciar Sesión">
-
-    </form>
-
-    <div class="extra">
-        ¿No estás registrado? <a href="add_alumno.php">Registrarme</a>
+        <i class="fa-solid fa-eye"
+           id="togglePassword"
+           style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#666;">
+        </i>
     </div>
 
-    <div class="extra">
-        ¿Eres docente nuevo u olvidaste tu contraseña?  
-        <a href="update_pass.php">Restablecer contraseña</a>
-    </div>
+    <input type="submit" value="Iniciar Sesión">
 
+</form>
+
+<div class="extra">
+    ¿No estás registrado? <a href="add_alumno.php">Registrarme</a>
 </div>
+
+<div class="extra">
+    ¿Eres docente nuevo u olvidaste tu contraseña?
+    <a href="update_pass.php">Restablecer contraseña</a>
+</div>
+
+
 <script>
-const togglePassword = document.querySelector("#togglePassword");
-const password = document.querySelector("#password");
+
+const togglePassword = document.getElementById("togglePassword");
+const password = document.getElementById("password");
 const form = password.closest("form");
+
 
 // Mostrar / ocultar contraseña
 togglePassword.addEventListener("click", function () {
 
-    const type = password.getAttribute("type") === "password"
-        ? "text"
-        : "password";
+    if (password.type === "password") {
 
-    password.setAttribute("type", type);
+        password.type = "text";
 
-    this.classList.toggle("fa-eye-slash");
+        this.classList.remove("fa-eye");
+        this.classList.add("fa-eye-slash");
+
+    } else {
+
+        password.type = "password";
+
+        this.classList.remove("fa-eye-slash");
+        this.classList.add("fa-eye");
+
+    }
+
 });
 
- 
+
+// Validar contraseña
 form.addEventListener("submit", function(event) {
 
     if (password.value.length < 8) {
+
         event.preventDefault();
 
         alert("La contraseña debe tener al menos 8 caracteres");
@@ -213,7 +223,5 @@ form.addEventListener("submit", function(event) {
     }
 
 });
+
 </script>
-</script>
-</body>
-</html>
