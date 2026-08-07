@@ -1,6 +1,7 @@
 <?php
 
-$host = getenv('DB_HOST') ?: 'mysql';
+//$host = getenv('DB_HOST') ?: 'mysql';
+$host = "sql202.infinityfree.com";
 $user = getenv('DB_USER') ?: 'admin';
 $pass = getenv('DB_PASS') ?: 'admin123';
 $db   = getenv('DB_NAME') ?: 'tecnol64_talleres2026V2';
