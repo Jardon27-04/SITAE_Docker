@@ -157,7 +157,18 @@ input[type="submit"]:hover{
         <h2 class="titulo">Inicia Sesión</h2>
 
         <input type="text" name="correo" placeholder="Correo">
-        <input type="password" name="password" placeholder="Contraseña">
+       <label>Contraseña:</label>
+
+<div style="position:relative;">
+    <input type="password" id="password" minlength="8" maxlength="10" style="padding-right:40px;">
+    
+    <i class="fa-solid fa-eye" id="togglePassword"
+       style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; color:#666;">
+    </i>
+</div>
+<div id="msgPassword" style="font-size:12px; color:red;"></div>
+
+<div class="footer-note">Máximo 10 caracteres</div>
 
         <input type="submit" value="Iniciar Sesión">
 
@@ -174,5 +185,29 @@ input[type="submit"]:hover{
 
 </div>
 
+<script>
+const toggle = document.getElementById("togglePassword");
+const input = document.getElementById("password");
+
+toggle.addEventListener("click", function () {
+    const type = input.getAttribute("type") === "password" ? "text" : "password";
+    input.setAttribute("type", type);
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+    
+    
+    const password = document.getElementById("password");
+const msg = document.getElementById("msgPassword");
+
+password.addEventListener("input", function () {
+    if (password.value.length < 8) {
+        msg.textContent = "La contraseña debe tener al menos 8 caracteres";
+    } else {
+        msg.textContent = "";
+    }
+});
+</script>
 </body>
 </html>
