@@ -219,9 +219,6 @@ body{
         <?php if ($_SESSION['rol'] == "2") { ?>
             <li><a href="historial_talleres.php"><i class="fas fa-book"></i>Mis talleres</a></li>
             <li><a href="add_taller.php"><i class="fas fa-plus-circle"></i>Registrar Taller</a></li>
-             <li>
-            <a href="exportar_bd.php"><i class="fas fa-user-shield"></i>Corregir Datos</a>
-        </li>
         <?php } ?>
 
         <?php if ($_SESSION['rol'] == "1") { ?>
@@ -246,7 +243,9 @@ body{
           <?php } ?>
             <li><a href="add_fecha.php"><i class="fas fa-calendar-alt"></i>Fecha Límite de Insc.</a></li>
    <li><a href="add_limite.php"><i class="fas fa-calendar-alt"></i>Fecha Límite de Liberacion</a></li>
-
+ <li>
+            <a href="exportar_bd.php"><i class="fas fa-user-shield"></i>Corregir Datos</a>
+        </li>
            
             
 
