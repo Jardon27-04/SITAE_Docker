@@ -8,8 +8,8 @@ require("conexion.php");
 
  
 
-    $update_datos = $mysqli->query("INSERT INTO limite (id_fecha,fecha_limite,status) 
-    VALUES('','$fecha_limite','$status')");   
+    $update_datos = $mysqli->query("INSERT INTO limite (fecha_limite,status) 
+    VALUES('$fecha_limite','$status')");   
 
     $upd_datos = $mysqli->query("UPDATE talleres SET limite_liberacion = '$fecha_limite' WHERE status = '1'");
     

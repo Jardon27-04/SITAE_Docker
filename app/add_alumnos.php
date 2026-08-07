@@ -26,8 +26,8 @@ else {
 if ($consultardato && $consultardato->num_rows > 0) {
     echo "Datos duplicados, ingresa nuevos datos";
 } else {
-    $insertar = $mysqli->query("INSERT INTO alumno (id_alumno,nombre_alumno, curp, matricula, cuatrimestre, grupo, carrera, telefono, correo, password, nivel, codigo,status) 
-                                VALUES ('','$nombre_alumno', '$curp', '$matricula', '$cuatrimestre', '$grupo', '$carrera','$telefono', '$correo', '$password', '$nivel','$codigo','1')");
+    $insertar = $mysqli->query("INSERT INTO alumno (nombre_alumno, curp, matricula, cuatrimestre, grupo, carrera, telefono, correo, password, nivel, codigo,status) 
+                                VALUES ('$nombre_alumno', '$curp', '$matricula', '$cuatrimestre', '$grupo', '$carrera','$telefono', '$correo', '$password', '$nivel','$codigo','1')");
 
     if ($insertar) {
        
