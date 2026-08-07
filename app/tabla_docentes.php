@@ -1,100 +1,186 @@
-<style> body{
-    background: rgb(219, 218, 207);
-}
-    </style><?php
-require('conexion.php');
+```php
+<?php
 
 session_start();
-$rol = $_SESSION['rol'];
+
+require('conexion.php');
+
+$rol = $_SESSION['rol'] ?? null;
+
+if (!$rol) {
+    die("Sesión no iniciada");
+}
 
 $status = $_POST['status'] ?? '';
- 
-if($rol == 1){
-$query = "SELECT 
-           id_docente, nombre, telefono, correo, status, num_empleado FROM docentes
-        WHERE rol = 2 AND 1";
+
+$query = "";
+
+
+// Administrador
+if ($rol == 1) {
+
+    $query = "SELECT 
+                id_docente,
+                nombre,
+                telefono,
+                correo,
+                status,
+                num_empleado
+              FROM docentes
+              WHERE rol = 2";
 
 }
 
-if($rol == 3){
-$query = "SELECT 
-           id_docente, nombre, telefono, correo, status, num_empleado FROM docentes";
+
+// Otro tipo de usuario con permisos
+elseif ($rol == 3) {
+
+    $query = "SELECT 
+                id_docente,
+                nombre,
+                telefono,
+                correo,
+                status,
+                num_empleado
+              FROM docentes
+              WHERE 1";
 
 }
+
+
+else {
+
+    die("No tienes permisos para ver docentes");
+
+}
+
+
+// Filtro por estado
 if ($status !== '') {
-    $query .= " AND status = '$status'";
-}
- 
 
+    $status = $mysqli->real_escape_string($status);
+
+    $query .= " AND status = '$status'";
+
+}
+
+
+// Ejecutar consulta
 $resultado = $mysqli->query($query);
 
-echo "<div class='tabla-responsive'>
-        <table id='tablaalumnoo' class='display'>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Correo</th>
-                    <th>Num. Empleado</th>
-                     <th>Status</th>
-                    <th>Modificar</th>
-                </tr>
-            </thead>
-            <tbody>";
+
+if (!$resultado) {
+
+    die("Error en la consulta: " . $mysqli->error);
+
+}
+
+
+// Encabezado tabla
+
+echo "
+
+<table class='table table-striped'>
+
+<thead>
+
+<tr>
+<th>Nombre</th>
+<th>Telefono</th>
+<th>Correo</th>
+<th>Num. Empleado</th>
+<th>Status</th>
+<th>Modificar</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+";
+
+
+// Mostrar datos
 
 while ($row = $resultado->fetch_assoc()) {
 
- echo "<tr>
-        <td>{$row['nombre']}</td>
-        <td>{$row['telefono']}</td>
-        <td>{$row['correo']}</td>
-         <td>{$row['num_empleado']}</td>
-        <td>";
-?>
 
-<form action="modificar_docente.php" method="POST">
-    <input type="hidden" name="id_docente" value="<?php echo $row['id_docente']; ?>">
+    echo "
 
-<?php
-if ($row['status'] == 1) {
-   
-    $textoBtn = "Activo";
-     $claseBtn = "btn-success"; 
+    <tr>
+
+    <td>{$row['nombre']}</td>
+
+    <td>{$row['telefono']}</td>
+
+    <td>{$row['correo']}</td>
+
+    <td>{$row['num_empleado']}</td>
+
+    <td>";
+
+
+    if ($row['status'] == 1) {
+
+        echo "
+
+        <span class='badge bg-success'>
+        Activo
+        </span>
+
+        ";
+
+    } 
     
-    ?>
-    <input type="hidden" name="status" value="2">
-    <?php
-} elseif ($row['status'] == 2) {
-    
-   $textoBtn = "Inactivo";
-        $claseBtn = "btn-danger";
-    ?>
-    <input type="hidden" name="status" value="1">
-    <?php
+    elseif ($row['status'] == 2) {
+
+        echo "
+
+        <span class='badge bg-danger'>
+        Inactivo
+        </span>
+
+        ";
+
+    }
+
+
+    echo "
+
+    </td>
+
+
+    <td>
+
+    <form action='modificar_docente.php' method='POST'>
+
+    <input type='hidden' 
+           name='id_docente' 
+           value='{$row['id_docente']}'>
+
+    <input type='submit' 
+           value='Modificar' 
+           class='btn btn-success btn-sm'>
+
+    </form>
+
+    </td>
+
+
+    </tr>
+
+    ";
+
 }
+
+
+echo "
+
+</tbody>
+
+</table>
+
+";
+
 ?>
-
-  <input type="submit" value="<?php echo $textoBtn; ?>" class="btn <?php echo $claseBtn; ?> btn-sm">
-</form>
-
-
-
-<?php
-echo "</td>
-
-
-
-
- <td>";
-?>
-
-<form action="upd_docente.php" method="POST">
-    <input type="hidden" name="id_docente" value="<?php echo $row['id_docente']; ?>">
-
-    <input type="submit" value="Actualizar" class="btn btn-success btn-sm">
-</form></tr>
-<?php
-}
-
-echo "</tbody></table></div>";
-?>
+```
