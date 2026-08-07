@@ -1,20 +1,25 @@
 services:
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  build:
+    context: .
+    dockerfile: Dockerfile
 
-    container_name: talleres_web
+  container_name: talleres_web
 
-    ports:
-      - "8080:80"
+  ports:
+    - "8080:80"
 
-    volumes:
-      - ./app:/var/www/html
+  volumes:
+    - ./app:/var/www/html
 
-    depends_on:
-      - mysql
+  environment:
+    MYSQL_USER: ${MYSQL_USER}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+  depends_on:
+    - mysql
 
 
   mysql:
