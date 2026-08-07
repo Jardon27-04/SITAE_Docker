@@ -21,8 +21,8 @@ if ($consultardato && $consultardato->num_rows > 0) {
    
 
     
-    $insertar = $mysqli->query("INSERT INTO docentes (id_docente,num_empleado,nombre, rol, telefono, correo, password, status, codigo) 
-                                VALUES ('','$num_empleado','$nombre', '$rol', '$telefono', '$correo', '$password', '$status', '$codigo')");
+    $insertar = $mysqli->query("INSERT INTO docentes (num_empleado,nombre, rol, telefono, correo, password, status, codigo) 
+                                VALUES ('$num_empleado','$nombre', '$rol', '$telefono', '$correo', '$password', '$status', '$codigo')");
 
     if ($insertar) {
         echo "El registro tuvo éxito.";
